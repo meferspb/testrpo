@@ -1,0 +1,42 @@
+version: '3.8'
+
+networks:
+  devops_net:
+    ipam:
+      config:
+        - subnet: 172.20.121.0/24
+
+services:
+  nginx1:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:./nginx/nginx.conf:ro
+    ports:
+      - "8081:80"
+    networks:
+      - devops_net
+
+  nginx2:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:./nginx/nginx.conf:ro
+    ports:
+      - "8082:80"
+    networks:
+      - devops_net
+
+  nginx3:
+    image: nginx:alpine
+    volumes:
+      - ./nginx.conf:./nginx/nginx.conf:ro
+    ports:
+      - "8083:80"
+    networks:
+      - devops_net
+
+  app:
+    image: containous/whoami
+    ports:
+      - "8080:8080"
+    networks:
+      - devops_net
